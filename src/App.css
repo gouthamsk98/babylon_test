@@ -1,0 +1,8 @@
+#root {
+}
+canvas {
+  border-color: black;
+  border: double;
+  width: 100vw;
+  height: 90vh;
+}
