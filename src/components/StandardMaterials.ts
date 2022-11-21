@@ -3,11 +3,22 @@ import {
   FreeCamera,
   HemisphericLight,
   MeshBuilder,
+  RawTexture2DArray,
   Scene,
+  StandardMaterial,
+  Texture,
   Vector3,
 } from "@babylonjs/core";
+import diffuse from "../assets/textures/ground/cobblestone_floor_08_diff_1k.jpg";
+import normal from "../assets/textures/ground/cobblestone_floor_08_nor_gl_1k.jpg";
+import ao from "../assets/textures/ground/cobblestone_floor_08_ao_1k.jpg";
+import spec from "../assets/textures/ground/cobblestone_floor_08_disp_1k.jpg";
+import ao_ball from "../assets/textures/metal/metal_ao.jpg";
+import diffuse_ball from "../assets/textures/metal/metal_diffuse.jpg";
+import normal_ball from "../assets/textures/metal/metal_normal.jpg";
+import spec_ball from "../assets/textures/metal/metal_spec.jpg";
 
-export class StandardMaterial {
+export class StandardMaterials {
   scene: Scene;
   engine: Engine;
   constructor(private canvas: HTMLCanvasElement) {
@@ -21,12 +32,13 @@ export class StandardMaterial {
     const scene = new Scene(this.engine);
     const camera = new FreeCamera("camera", new Vector3(0, 1, -5), this.scene);
     camera.attachControl();
+    camera.speed = 0.25;
     const hemiLight = new HemisphericLight(
       "hemiLight",
       new Vector3(0, 1, 0),
       this.scene
     );
-    hemiLight.intensity = 0.5;
+    hemiLight.intensity = 1;
     const ground = MeshBuilder.CreateGround(
       "ground",
       { width: 10, height: 10 },
@@ -35,6 +47,56 @@ export class StandardMaterial {
     const ball = MeshBuilder.CreateSphere("ball", { diameter: 1 }, this.scene);
     ball.position = new Vector3(0, 1, 0);
 
+    ground.material = this.CreateGroundMaterial();
+    ball.material = this.CreateBallMaterial();
+
     return scene;
+  }
+  CreateGroundMaterial(): StandardMaterial {
+    const groundMat = new StandardMaterial("groundMat", this.scene);
+    const uvScale = 4;
+    const texArray: Texture[] = [];
+    const diffuseTex = new Texture(diffuse, this.scene);
+    groundMat.diffuseTexture = diffuseTex;
+    texArray.push(diffuseTex);
+    const normalTex = new Texture(normal, this.scene);
+    groundMat.bumpTexture = normalTex;
+    texArray.push(normalTex);
+    const aoTex = new Texture(ao, this.scene);
+    groundMat.ambientTexture = aoTex;
+    texArray.push(aoTex);
+    const specTex = new Texture(spec, this.scene);
+    groundMat.specularTexture = specTex;
+    texArray.push(specTex);
+    texArray.forEach((tex) => {
+      tex.uScale = uvScale;
+      tex.vScale = uvScale;
+    });
+    return groundMat;
+  }
+  CreateBallMaterial(): StandardMaterial {
+    const ballMat = new StandardMaterial("groundMat", this.scene);
+    const uvScale = 2;
+    const texArray: Texture[] = [];
+    const diffuseTex = new Texture(diffuse_ball, this.scene);
+    ballMat.diffuseTexture = diffuseTex;
+    texArray.push(diffuseTex);
+    const normalTex = new Texture(normal_ball, this.scene);
+    ballMat.bumpTexture = normalTex;
+    ballMat.invertNormalMapX = true;
+    ballMat.invertNormalMapY = true;
+    texArray.push(normalTex);
+    const aoTex = new Texture(ao_ball, this.scene);
+    ballMat.ambientTexture = aoTex;
+    texArray.push(aoTex);
+    const specTex = new Texture(spec_ball, this.scene);
+    ballMat.specularTexture = specTex;
+    ballMat.specularPower = 6;
+    texArray.push(specTex);
+    texArray.forEach((tex) => {
+      tex.uScale = uvScale;
+      tex.vScale = uvScale;
+    });
+    return ballMat;
   }
 }
