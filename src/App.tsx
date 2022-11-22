@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { StandardMaterials } from "./components/StandardMaterials";
+import { PBR } from "./components/PBR";
 function App() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     const canvas = document.querySelector("canvas")!;
-    new StandardMaterials(canvas);
+    new PBR(canvas);
   });
   return (
     <div className="App">
