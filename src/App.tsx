@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { PBR } from "./components/PBR";
+import { CustomModels } from "./components/CustomModels";
 function App() {
   const [count, setCount] = useState(0);
   useEffect(() => {
-    const canvas = document.querySelector("canvas")!;
-    new PBR(canvas);
+    return () => {
+      const canvas = document.querySelector("canvas")!;
+      new CustomModels(canvas);
+    };
   });
   return (
     <div className="App">
