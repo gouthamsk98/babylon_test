@@ -70,7 +70,7 @@ export class PBR {
       "./textures/street/asphalt_02_nor_gl_1k.jpg",
       this.scene
     );
-    pbr.invertNormalMapX = true;
+    pbr.invertNormalMapX = true; 
     pbr.invertNormalMapY = true;
     pbr.useAmbientOcclusionFromMetallicTextureRed = true;
     pbr.useRoughnessFromMetallicTextureGreen = true;

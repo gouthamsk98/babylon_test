@@ -19,7 +19,8 @@ export class CustomModels {
     this.scene = this.CreateScene();
     // this.createEnvironmant();
     // this.createBarrel();
-    this.createCampFire();
+    // this.createCampFire();
+    this.createPrototype();
     this.engine.runRenderLoop(() => {
       this.scene.render();
     });
@@ -98,6 +99,14 @@ export class CustomModels {
       "",
       "./models/",
       "campfire.glb"
+    );
+    console.log("meshes=", models);
+  }
+  async createPrototype(): Promise<void> {
+    const models = await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "Prototype_Level.glb"
     );
     console.log("meshes=", models);
   }

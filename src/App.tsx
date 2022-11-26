@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { CustomModels } from "./components/CustomModels";
+import { LightShadows } from "./components/LightShadows";
 function App() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     return () => {
       const canvas = document.querySelector("canvas")!;
-      new CustomModels(canvas);
+      new LightShadows(canvas);
     };
   });
   return (
