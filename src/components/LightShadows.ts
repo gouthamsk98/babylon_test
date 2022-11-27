@@ -27,7 +27,7 @@ export class LightShadows {
     const scene = new Scene(this.engine);
     const camera = new FreeCamera("camera", new Vector3(0, 1, -5), this.scene);
     camera.attachControl();
-    camera.speed = 0.25;
+    camera.speed = 0.4;
     const hemiLight = new HemisphericLight(
       "hemiLight",
       new Vector3(0, 1, 0),

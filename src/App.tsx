@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { LightShadows } from "./components/LightShadows";
+import { FPS } from "./components/FPS";
 function App() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     return () => {
       const canvas = document.querySelector("canvas")!;
-      new LightShadows(canvas);
+      new FPS(canvas);
     };
   });
   return (
