@@ -27,6 +27,7 @@ export class WaterRace {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.CreateScene();
     this.createController();
+    this.createPrototype();
     this.CreateImpostors();
     this.engine.runRenderLoop(() => {
       this.scene.render();
@@ -114,5 +115,18 @@ export class WaterRace {
       { mass: 0, restitution: 0.5 }
     );
     ground.checkCollisions = true;
+  }
+  async createPrototype(): Promise<void> {
+    const { meshes } = await SceneLoader.ImportMeshAsync(
+      "",
+      "./models/",
+      "ship_dark.glb"
+    );
+
+    meshes.map((mesh) => {
+      mesh.checkCollisions = true;
+      mesh.position = new Vector3(0, 10, 0);
+    });
+    console.log("meshes=", meshes);
   }
 }
