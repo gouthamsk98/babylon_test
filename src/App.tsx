@@ -6,7 +6,7 @@ import { BasicScene } from "./components/BasicScene";
 import { WaterRace } from "./components/WaterRace";
 import Sidebar from "./Sidebar";
 function App() {
-  const [circle, setCircle] = useState(false);
+  const [circle, setCircle] = useState(0);
   useEffect(() => {
     return () => {};
   });
@@ -19,7 +19,7 @@ function App() {
     const imageSrc = event.dataTransfer.getData("text/plain");
     console.log(imageSrc);
     if (imageSrc == "circle") {
-      setCircle(true);
+      setCircle(circle + 1);
       console.log("hello", imageSrc, circle);
     }
     // Use Babylon.js to apply the image texture to the 3D model

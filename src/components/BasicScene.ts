@@ -2,6 +2,7 @@ import {
   Engine,
   FreeCamera,
   HemisphericLight,
+  int,
   MeshBuilder,
   Scene,
   Vector3,
@@ -10,7 +11,7 @@ import {
 export class BasicScene {
   scene: Scene;
   engine: Engine;
-  constructor(private canvas: HTMLCanvasElement, private circle: boolean) {
+  constructor(private canvas: HTMLCanvasElement, private circle: int) {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.CreateScene();
     this.engine.runRenderLoop(() => {
@@ -33,13 +34,14 @@ export class BasicScene {
       { width: 10, height: 10 },
       this.scene
     );
-    if (this.circle) {
+
+    for (let i = 0; i < this.circle; i++) {
       const ball = MeshBuilder.CreateSphere(
         "ball",
-        { diameter: 1 },
+        { diameter: 0.5 },
         this.scene
       );
-      ball.position = new Vector3(0, 1, 0);
+      ball.position = new Vector3(i + 0.5, 1, 0);
     }
 
     return scene;
