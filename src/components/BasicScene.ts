@@ -11,7 +11,12 @@ import {
 export class BasicScene {
   scene: Scene;
   engine: Engine;
-  constructor(private canvas: HTMLCanvasElement, private circle: int) {
+  constructor(
+    private canvas: HTMLCanvasElement,
+    private circle: int,
+    private square: int,
+    private triangle: int
+  ) {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.CreateScene();
     this.engine.runRenderLoop(() => {
@@ -19,7 +24,7 @@ export class BasicScene {
     });
   }
   CreateScene(): Scene {
-    console.log("circle", this.circle);
+    console.log("triangle", this.triangle);
     const scene = new Scene(this.engine);
     const camera = new FreeCamera("camera", new Vector3(0, 1, -5), this.scene);
     camera.attachControl();
@@ -42,6 +47,19 @@ export class BasicScene {
         this.scene
       );
       ball.position = new Vector3(i + 0.5, 1, 0);
+    }
+    for (let i = 0; i < this.square; i++) {
+      const box = MeshBuilder.CreateBox("box", { size: 0.5 }, this.scene);
+      box.position = new Vector3(i + 0.5, 1, 0);
+    }
+    for (let i = 0; i < this.triangle; i++) {
+      const corn = MeshBuilder.CreateCylinder("corn", {
+        height: 3,
+        diameterTop: 0.1,
+        diameterBottom: 0.5,
+        tessellation: 16,
+      });
+      corn.position = new Vector3(i + 0.5, 1, 0);
     }
 
     return scene;
