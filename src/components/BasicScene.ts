@@ -10,7 +10,7 @@ import {
 export class BasicScene {
   scene: Scene;
   engine: Engine;
-  constructor(private canvas: HTMLCanvasElement) {
+  constructor(private canvas: HTMLCanvasElement, private circle: boolean) {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.CreateScene();
     this.engine.runRenderLoop(() => {
@@ -18,6 +18,7 @@ export class BasicScene {
     });
   }
   CreateScene(): Scene {
+    console.log("circle", this.circle);
     const scene = new Scene(this.engine);
     const camera = new FreeCamera("camera", new Vector3(0, 1, -5), this.scene);
     camera.attachControl();
@@ -32,8 +33,14 @@ export class BasicScene {
       { width: 10, height: 10 },
       this.scene
     );
-    const ball = MeshBuilder.CreateSphere("ball", { diameter: 1 }, this.scene);
-    ball.position = new Vector3(0, 1, 0);
+    if (this.circle) {
+      const ball = MeshBuilder.CreateSphere(
+        "ball",
+        { diameter: 1 },
+        this.scene
+      );
+      ball.position = new Vector3(0, 1, 0);
+    }
 
     return scene;
   }
